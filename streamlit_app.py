@@ -2,12 +2,24 @@ import streamlit as st
 import pandas as pd
 import random
 
-# Sample DataFrame with words and synonyms
+# DataFrame with words and their synonyms
 data = {
-    'Word': ['happy', 'sad', 'fast', 'slow', 'big', 'small'],
-    'Synonym1': ['joyful', 'unhappy', 'quick', 'lethargic', 'large', 'tiny'],
-    'Synonym2': ['content', 'sorrowful', 'rapid', 'sluggish', 'huge', 'little'],
-    'Synonym3': ['cheerful', 'mournful', 'speedy', 'unhurried', 'vast', 'miniature']
+    'Word': [
+        'seldom', 'frequently', 'sometimes', 'always', 'yearly', 'dressed', 'arrogant', 
+        'modest', 'vain', 'gathering', 'greedy', 'short', 'horrible', 'drunk', 
+        'unbeatable', 'jolly', 'sad', 'force', 'dumb', 'hide', 'scatter', 'sign', 
+        'choice', 'expensive', 'serious', 'wasteful', 'enough', 'conquer', 'watch', 
+        'view', 'loneliness', 'permit', 'empty', 'join', 'doubtful', 'surplus', 
+        'power', 'area', 'freedom', 'forgive', 'surrender'
+    ],
+    'Synonym1': [
+        'rarely', 'often', 'occasionally', 'constantly', 'annual', 'attired', 'naughty', 
+        'humble', 'conceited', 'assembly', 'avaricious', 'brief', 'gruesome', 'intoxicated', 
+        'invincible', 'jovial', 'melancholy', 'compel', 'mute', 'conceal', 'disperse', 
+        'omen', 'option', 'dear', 'grave', 'extravagant', 'sufficient', 'vanquish', 
+        'observe', 'panorama', 'solitude', 'allow', 'vacant', 'unite', 'dubious', 
+        'excess', 'force', 'region', 'liberty', 'pardon', 'capitulate'
+    ]
 }
 
 df = pd.DataFrame(data)
@@ -16,7 +28,7 @@ df = pd.DataFrame(data)
 def generate_question(df):
     row = df.sample().iloc[0]
     word = row['Word']
-    correct_answers = [row['Synonym1'], row['Synonym2'], row['Synonym3']]
+    correct_answers = [row['Synonym1']]
     return word, correct_answers
 
 st.title('Synonym Quiz for 11+ Exam Preparation')
