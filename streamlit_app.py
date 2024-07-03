@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import random
+import time
 
 # Sample DataFrame with words and synonyms
 data = {
@@ -28,8 +29,12 @@ if 'score' not in st.session_state:
     st.session_state.score = 0
 if 'question_count' not in st.session_state:
     st.session_state.question_count = 0
+if 'current_question' not in st.session_state:
+    st.session_state.current_question = generate_question(df)
+if 'feedback' not in st.session_state:
+    st.session_state.feedback = ""
 
-word, correct_answer, options = generate_question(df)
+word, correct_answer, options = st.session_state.current_question
 
 st.write(f"Select the synonym for the word: **{word}**")
 
@@ -38,11 +43,17 @@ user_answer = st.radio("Options:", options)
 if st.button("Submit"):
     if user_answer == correct_answer:
         st.session_state.score += 1
-        st.success("Correct!")
+        st.session_state.feedback = "Correct!"
     else:
-        st.error(f"Incorrect. The correct answer is {correct_answer}.")
+        st.session_state.feedback = f"Incorrect. The correct answer is {correct_answer}."
     
     st.session_state.question_count += 1
 
     st.write(f"Score: {st.session_state.score}/{st.session_state.question_count}")
+    st.write(st.session_state.feedback)
+    
+    # Wait for 2 seconds before showing the next question
+    time.sleep(2)
+    
+    st.session_state.current_question = generate_question(df)
     st.experimental_rerun()
